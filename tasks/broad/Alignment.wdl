@@ -115,9 +115,9 @@ task SamToFastqAndBwaMemAndMba {
   runtime {
     docker: "us.gcr.io/broad-gotc-prod/samtools-picard-bwa:1.0.2-0.7.15-2.26.10-1643840748"
     preemptible: preemptible_tries
-    memory: "14 GiB"
-    cpu: "16"
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    cpu: "64"
+    disks: "local-disk 300 SSD"
   }
   output {
     File output_bam = "~{output_bam_basename}.bam"
@@ -156,7 +156,7 @@ task SamSplitter {
   runtime {
     docker: "us.gcr.io/broad-gotc-prod/samtools-picard-bwa:1.0.2-0.7.15-2.26.10-1643840748"
     preemptible: preemptible_tries
-    memory: "3.75 GiB"
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    disks: "local-disk 300 SSD"
   }
 }

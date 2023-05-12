@@ -68,9 +68,9 @@ task HaplotypeCaller_GATK35_GVCF {
   runtime {
     docker: "us.gcr.io/broad-gotc-prod/gatk:1.3.0-4.2.6.1-1649964384"
     preemptible: preemptible_tries
-    memory: "10000 MiB"
-    cpu: "1"
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    cpu: "64"
+    disks: "local-disk 300 SSD"
   }
   output {
     File output_gvcf = "~{gvcf_basename}.vcf.gz"
@@ -150,10 +150,10 @@ task HaplotypeCaller_GATK4_VCF {
   runtime {
     docker: gatk_docker
     preemptible: preemptible_tries
-    memory: "~{memory_size_mb} MiB"
-    cpu: "2"
-    bootDiskSizeGb: 15
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    cpu: "64"
+    bootDiskSizeGb: 300
+    disks: "local-disk 300 SSD"
   }
 
   output {
@@ -185,8 +185,8 @@ task MergeVCFs {
   runtime {
     docker: "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
     preemptible: preemptible_tries
-    memory: "3000 MiB"
-    disks: "local-disk ~{disk_size} HDD"
+    memory: "57 GiB"
+    disks: "local-disk 300 SSD"
   }
   output {
     File output_vcf = "~{output_vcf_name}"
@@ -226,9 +226,9 @@ task Reblock {
   }
 
   runtime {
-    memory: "3750 MiB"
-    disks: "local-disk " + disk_size + " HDD"
-    bootDiskSizeGb: 15
+    memory: "57 GiB"
+    disks: "local-disk 300 SSD"
+    bootDiskSizeGb: 300
     preemptible: 3
     docker: docker_image
   }
@@ -268,9 +268,9 @@ task HardFilterVcf {
   runtime {
     docker: gatk_docker
     preemptible: preemptible_tries
-    memory: "3000 MiB"
-    bootDiskSizeGb: 15
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    bootDiskSizeGb: 300
+    disks: "local-disk 300 SSD"
   }
 }
 
@@ -305,9 +305,9 @@ task DragenHardFilterVcf {
   runtime {
     docker: gatk_docker
     preemptible: preemptible_tries
-    memory: "3000 MiB"
-    bootDiskSizeGb: 15
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    bootDiskSizeGb: 300
+    disks: "local-disk 300 SSD"
   }
 }
 
@@ -354,10 +354,10 @@ task CNNScoreVariants {
   runtime {
     docker: gatk_docker
     preemptible: preemptible_tries
-    memory: "15000 MiB"
-    cpu: "2"
-    bootDiskSizeGb: 15
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    cpu: "64"
+    bootDiskSizeGb: 300
+    disks: "local-disk 300 SSD"
   }
 }
 
@@ -410,10 +410,10 @@ task FilterVariantTranches {
   }
 
   runtime {
-    memory: "7000 MiB"
-    cpu: "2"
-    bootDiskSizeGb: 15
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    cpu: "64"
+    bootDiskSizeGb: 300
+    disks: "local-disk 300 SSD"
     preemptible: preemptible_tries
     docker: gatk_docker
   }

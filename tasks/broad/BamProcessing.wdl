@@ -47,9 +47,9 @@ task SortSam {
   }
   runtime {
     docker: "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
-    disks: "local-disk " + disk_size + " HDD"
-    cpu: "1"
-    memory: "${machine_mem_mb} MiB"
+    disks: "local-disk 300 SSD"
+    cpu: "64"
+    memory: "57 GiB"
     preemptible: preemptible_tries
   }
   output {
@@ -109,8 +109,8 @@ task MarkDuplicates {
   runtime {
     docker: "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
     preemptible: preemptible_tries
-    memory: "~{memory_size} GiB"
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    disks: "local-disk 300 SSD"
   }
   output {
     File output_bam = "~{output_bam_basename}.bam"
@@ -163,9 +163,9 @@ task BaseRecalibrator {
   runtime {
     docker: gatk_docker
     preemptible: preemptible_tries
-    memory: "6000 MiB"
-    bootDiskSizeGb: 15
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    bootDiskSizeGb: 300
+    disks: "local-disk 300 SSD"
   }
   output {
     File recalibration_report = "~{recalibration_report_filename}"
@@ -229,9 +229,9 @@ task ApplyBQSR {
   runtime {
     docker: gatk_docker
     preemptible: preemptible_tries
-    memory: "~{memory_size} MiB"
-    bootDiskSizeGb: 15
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    bootDiskSizeGb: 300
+    disks: "local-disk 300 SSD"
   }
   output {
     File recalibrated_bam = "~{output_bam_basename}.bam"
@@ -257,9 +257,9 @@ task GatherBqsrReports {
   runtime {
     docker: gatk_docker
     preemptible: preemptible_tries
-    memory: "3500 MiB"
-    bootDiskSizeGb: 15
-    disks: "local-disk 20 HDD"
+    memory: "57 GiB"
+    bootDiskSizeGb: 300
+    disks: "local-disk 300 SSD"
   }
   output {
     File output_bqsr_report = "~{output_report_filename}"
@@ -295,8 +295,8 @@ task GatherSortedBamFiles {
   runtime {
     docker: "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
     preemptible: preemptible_tries
-    memory: "${machine_mem_mb} MiB"
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    disks: "local-disk 300 SSD"
   }
   output {
     File output_bam = "~{output_bam_basename}.bam"
@@ -330,8 +330,8 @@ task GatherUnsortedBamFiles {
   runtime {
     docker: "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
     preemptible: preemptible_tries
-    memory: "3 GiB"
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    disks: "local-disk 300 SSD"
   }
   output {
     File output_bam = "~{output_bam_basename}.bam"
@@ -379,8 +379,8 @@ task GenerateSubsettedContaminationResources {
   >>>
   runtime {
     preemptible: preemptible_tries
-    memory: "3.5 GiB"
-    disks: "local-disk 10 HDD"
+    memory: "57 GiB"
+    disks: "local-disk 300 SSD"
     docker: "us.gcr.io/broad-gotc-prod/bedtools:2.27.1"
   }
   output {
@@ -462,10 +462,10 @@ task CheckContamination {
   >>>
   runtime {
     preemptible: preemptible_tries
-    memory: "7.5 GiB"
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    disks: "local-disk 300 SSD"
     docker: "us.gcr.io/broad-gotc-prod/verify-bam-id:1.0.1-c1cba76e979904eb69c31520a0d7f5be63c72253-1639071840"
-    cpu: 2
+    cpu: "64"
   }
   output {
     File selfSM = "~{output_prefix}.selfSM"

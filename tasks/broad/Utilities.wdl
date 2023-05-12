@@ -63,7 +63,7 @@ task CreateSequenceGroupingTSV {
   runtime {
     preemptible: preemptible_tries
     docker: "us.gcr.io/broad-dsp-gcr-public/base/python:3.9-debian"
-    memory: "2 GiB"
+    memory: "57 GiB"
   }
   output {
     Array[Array[String]] sequence_grouping = read_tsv("sequence_grouping.txt")
@@ -111,7 +111,7 @@ task ScatterIntervalList {
   }
   runtime {
     docker: "us.gcr.io/broad-gotc-prod/picard-python:1.0.0-2.26.10-1663951039"
-    memory: "2000 MiB"
+    memory: "57 GiB"
   }
 }
 
@@ -146,9 +146,9 @@ task ConvertToCram {
   runtime {
     docker: "us.gcr.io/broad-gotc-prod/samtools:1.0.0-1.11-1624651616"
     preemptible: preemptible_tries
-    memory: "3 GiB"
-    cpu: "1"
-    disks: "local-disk " + disk_size + " HDD"
+    memory: "57 GiB"
+    cpu: "64"
+    disks: "local-disk 300 SSD"
   }
   output {
     File output_cram = "~{output_basename}.cram"
@@ -177,9 +177,9 @@ task ConvertToBam {
   runtime {
     docker: "us.gcr.io/broad-gotc-prod/samtools:1.0.0-1.11-1624651616"
     preemptible: 3
-    memory: "3 GiB"
-    cpu: "1"
-    disks: "local-disk 200 HDD"
+    memory: "57 GiB"
+    cpu: "64"
+    disks: "local-disk 300 SSD"
   }
   output {
     File output_bam = "~{output_basename}.bam"
@@ -286,9 +286,9 @@ task GetValidationInputs {
 
   runtime {
     docker: docker
-    cpu: cpu
-    memory: "~{memory_mb} MiB"
-    disks: "local-disk ~{disk_size_gb} HDD"
+    cpu: "64" 
+    memory: "57 GiB"
+    disks: "local-disk 300 SSD"
   }
 
   output {
